@@ -3,6 +3,14 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
+.idea
+.idea/
+*.iml
+
+.gigaide
+.gigaide/
+*.gigaide
+
 ### Eclipse ###
 .apt_generated
 .classpath
