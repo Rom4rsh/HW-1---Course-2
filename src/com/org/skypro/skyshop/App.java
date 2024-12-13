@@ -1,32 +1,31 @@
-package com.org.skypro.skyshop;
 // SkyPro
 // Аршинов Роман,rom4rsh@gmail.com, 2024
 // Домашнее задание по теме "Введение в ООП. Инкапсуляция"
 
+package com.org.skypro.skyshop;
+
 import com.org.skypro.skyshop.basket.ProductBasket;
+import com.org.skypro.skyshop.product.DiscountProduct;
+import com.org.skypro.skyshop.product.FixPriceProduct;
 import com.org.skypro.skyshop.product.Product;
+import com.org.skypro.skyshop.product.SimpleProduct;
 
 public class App {
     public static void main(String[] args) {
-        Product product1 = new Product("Майка", 1000);
-        Product product2 = new Product("Кеды", 1500);
-        Product product3 = new Product("Футболка", 2000);
-        Product product4 = new Product("Джинсы", 3000);
-        Product product5 = new Product("Рубашка", 4000);
-
-        Product product6 = new Product("Кофта", 5000);
-
         ProductBasket basket = new ProductBasket();
 
         // Добавление продукта в корзину.
-        basket.addProduct(product1);
-        basket.addProduct(product2);
-        basket.addProduct(product3);
-        basket.addProduct(product4);
-        basket.addProduct(product5);
+        basket.addProduct(new SimpleProduct("Майка", 1000));
+        basket.addProduct(new SimpleProduct("Кеды", 1500));
+        basket.addProduct(new SimpleProduct("Футболка", 2000));
+        basket.addProduct(new SimpleProduct("Рубашка", 2000));
+        basket.addProduct(new SimpleProduct("Джинсы", 3000));
+        basket.addProduct(new DiscountProduct("Толстовка",1000,10));
+        basket.addProduct(new FixPriceProduct("Очки"));
+
 
         // Добавление продукта в заполненную корзину, в которой нет свободного места.
-        basket.addProduct(product6);
+        basket.addProduct(new SimpleProduct("Сумка", 4000));
 
         // Печать содержимого корзины с несколькими товарами.
         basket.printProducts();
@@ -36,11 +35,11 @@ public class App {
         System.out.println("Цена корзины равна " + totalPrice);
 
         // Поиск товара, который есть в корзине.
-        boolean itemExists = basket.findProduct(product1.getTitle());
+        boolean itemExists = basket.findProduct("Майка");
         System.out.println("Наличие товара в корзине: " + itemExists);
 
         // Поиск товара, которого нет в корзине.
-        itemExists = basket.findProduct(product6.getTitle());
+        itemExists = basket.findProduct("Пижама");
         System.out.println("Наличие товара в корзине: " + itemExists);
 
         // Очистка корзины.
@@ -54,7 +53,10 @@ public class App {
         System.out.println("Цена корзины равна " + totalPrice);
 
         // Поиск товара по имени в пустой корзине
-        itemExists = basket.findProduct(product1.getTitle());
+        itemExists = basket.findProduct("Футболка");
         System.out.println("Наличие товара в корзине: " + itemExists);
+
+        Product product2 = new FixPriceProduct("bb");
+        System.out.println(product2.isSpecial());
     }
 }

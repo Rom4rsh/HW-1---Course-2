@@ -12,7 +12,7 @@ public class ProductBasket {
 
     private final Product[] products;
 
-    public final int STORAGE_MAX = 5;
+    public final int STORAGE_MAX = 20;
 
     public ProductBasket() {
         products = new Product[STORAGE_MAX];
@@ -39,11 +39,18 @@ public class ProductBasket {
 
     public void printProducts() {
         boolean empty = true;
+        int specialCount = 0;
         for (var product : products) {
             if (product != null) {
-                System.out.println(product.getTitle() + ": " + product.getPrice());
+                System.out.println(product);
+                if (product.isSpecial() == true) {
+                    specialCount++;
+                }
                 empty = false;
             }
+        }
+        if (!empty) {
+            System.out.println("Колличество специальных товаров " + specialCount);
         }
 
         if (empty) {
