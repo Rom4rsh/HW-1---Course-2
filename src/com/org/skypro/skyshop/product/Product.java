@@ -5,10 +5,14 @@
 package com.org.skypro.skyshop.product;
 
 public abstract class Product implements Searchable {
+
     protected String title;
     protected int price;
 
     public Product(String name, int price) {
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("Введите название продукта");
+        }
         this.title = name;
         this.price = price;
     }

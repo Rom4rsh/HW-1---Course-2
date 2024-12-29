@@ -43,7 +43,7 @@ public class ProductBasket {
         for (var product : products) {
             if (product != null) {
                 System.out.println(product);
-                if (product.isSpecial() == true) {
+                if (product.isSpecial()) {
                     specialCount++;
                 }
                 empty = false;

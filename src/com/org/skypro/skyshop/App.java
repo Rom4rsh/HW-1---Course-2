@@ -14,23 +14,25 @@ public class App {
 
         ProductBasket basket = new ProductBasket();
 
-        var product1 = new SimpleProduct("Майка", 1000);
-        var product2 = new SimpleProduct("Кеды", 1500);
+        var product1 = new SimpleProduct("Кофта", 1000);
+        var product2 = new SimpleProduct("Кеды", 2);
         var product3 = new SimpleProduct("Футболка", 2000);
         var product4 = new SimpleProduct("Рубашка", 2000);
         var prodcut5 = new SimpleProduct("Джинсы", 3000);
-        var prodcut6 = new DiscountProduct("Толстовка", 1000, 10);
         var product7 = new FixPriceProduct("Очки");
 
-        // Добавление продукта в корзину.
-        basket.addProduct(product1);
-        basket.addProduct(product2);
-        basket.addProduct(product3);
-        basket.addProduct(product4);
-        basket.addProduct(prodcut5);
-        basket.addProduct(prodcut6);
-        basket.addProduct(product7);
 
+        try {
+            // Добавление продукта в корзину.
+            basket.addProduct(product1);
+            basket.addProduct(product2);
+            basket.addProduct(product3);
+            basket.addProduct(product4);
+            basket.addProduct(prodcut5);
+            basket.addProduct(product7);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+        }
 
         // Добавление продукта в заполненную корзину, в которой нет свободного места.
         basket.addProduct(new SimpleProduct("Сумка", 4000));
@@ -72,8 +74,8 @@ public class App {
         searchEngine.searchAdd(product3);
         searchEngine.searchAdd(product4);
         searchEngine.searchAdd(prodcut5);
-        searchEngine.searchAdd(prodcut6);
         searchEngine.searchAdd(product7);
+
 
         Article article1 = new Article("31 декабря", "Празднование нового года");
         Article article2 = new Article("8 марта", "Женский день");
@@ -84,6 +86,7 @@ public class App {
         searchEngine.searchAdd(article2);
         searchEngine.searchAdd(article3);
         searchEngine.searchAdd(article4);
+
 
         var searchResults = searchEngine.search("31");
         for (var result : searchResults) {
@@ -97,6 +100,31 @@ public class App {
             if (result != null) {
                 System.out.println(result);
             }
+        }
+
+        try {
+            Product product = new SimpleProduct("", 1000);
+        } catch (IllegalArgumentException e) {
+            System.err.println(e);
+        }
+
+        try {
+            Product simpleProduct = new SimpleProduct("Яблоко", 0);
+        } catch (IllegalArgumentException e) {
+            System.err.println(e);
+        }
+
+        try {
+            Product discountProduct = new DiscountProduct("Телевизор", 10000, 100);
+        } catch (IllegalArgumentException e) {
+            System.err.println(e);
+        }
+
+        try {
+            var searchBest = searchEngine.findBestMatch("d");
+            System.out.println(searchBest);
+        } catch (BestResultNotFound e) {
+            System.err.println(e);
         }
     }
 }

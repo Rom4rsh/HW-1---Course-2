@@ -4,7 +4,6 @@ public interface Searchable {
 
     String searchTherm();
 
-
     String searchContent();
 
 
