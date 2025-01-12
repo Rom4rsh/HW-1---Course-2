@@ -5,24 +5,34 @@
 package com.org.skypro.skyshop;
 
 import com.org.skypro.skyshop.basket.ProductBasket;
-import com.org.skypro.skyshop.product.DiscountProduct;
-import com.org.skypro.skyshop.product.FixPriceProduct;
-import com.org.skypro.skyshop.product.Product;
-import com.org.skypro.skyshop.product.SimpleProduct;
+import com.org.skypro.skyshop.product.*;
+
+import java.util.Arrays;
 
 public class App {
     public static void main(String[] args) {
+
         ProductBasket basket = new ProductBasket();
 
-        // Добавление продукта в корзину.
-        basket.addProduct(new SimpleProduct("Майка", 1000));
-        basket.addProduct(new SimpleProduct("Кеды", 1500));
-        basket.addProduct(new SimpleProduct("Футболка", 2000));
-        basket.addProduct(new SimpleProduct("Рубашка", 2000));
-        basket.addProduct(new SimpleProduct("Джинсы", 3000));
-        basket.addProduct(new DiscountProduct("Толстовка",1000,10));
-        basket.addProduct(new FixPriceProduct("Очки"));
+        var product1 = new SimpleProduct("Кофта", 1000);
+        var product2 = new SimpleProduct("Кеды", 2);
+        var product3 = new SimpleProduct("Футболка", 2000);
+        var product4 = new SimpleProduct("Рубашка", 2000);
+        var prodcut5 = new SimpleProduct("Джинсы", 3000);
+        var product7 = new FixPriceProduct("Очки");
 
+
+        try {
+            // Добавление продукта в корзину.
+            basket.addProduct(product1);
+            basket.addProduct(product2);
+            basket.addProduct(product3);
+            basket.addProduct(product4);
+            basket.addProduct(prodcut5);
+            basket.addProduct(product7);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+        }
 
         // Добавление продукта в заполненную корзину, в которой нет свободного места.
         basket.addProduct(new SimpleProduct("Сумка", 4000));
@@ -56,7 +66,65 @@ public class App {
         itemExists = basket.findProduct("Футболка");
         System.out.println("Наличие товара в корзине: " + itemExists);
 
-        Product product2 = new FixPriceProduct("bb");
-        System.out.println(product2.isSpecial());
+
+        SearchEngine searchEngine = new SearchEngine(100);
+
+        searchEngine.searchAdd(product1);
+        searchEngine.searchAdd(product2);
+        searchEngine.searchAdd(product3);
+        searchEngine.searchAdd(product4);
+        searchEngine.searchAdd(prodcut5);
+        searchEngine.searchAdd(product7);
+
+
+        Article article1 = new Article("31 декабря", "Празднование нового года");
+        Article article2 = new Article("8 марта", "Женский день");
+        Article article3 = new Article("23 февраля", "Мужской день");
+        Article article4 = new Article("4 ноября", "День народного единства");
+
+        searchEngine.searchAdd(article1);
+        searchEngine.searchAdd(article2);
+        searchEngine.searchAdd(article3);
+        searchEngine.searchAdd(article4);
+
+
+        var searchResults = searchEngine.search("31");
+        for (var result : searchResults) {
+            if (result != null) {
+                System.out.println(result);
+            }
+        }
+
+        var searchResults2 = searchEngine.search("Мужской день");
+        for (var result : searchResults2) {
+            if (result != null) {
+                System.out.println(result);
+            }
+        }
+
+        try {
+            Product product = new SimpleProduct("", 1000);
+        } catch (IllegalArgumentException e) {
+            System.err.println(e);
+        }
+
+        try {
+            Product simpleProduct = new SimpleProduct("Яблоко", 0);
+        } catch (IllegalArgumentException e) {
+            System.err.println(e);
+        }
+
+        try {
+            Product discountProduct = new DiscountProduct("Телевизор", 10000, 100);
+        } catch (IllegalArgumentException e) {
+            System.err.println(e);
+        }
+
+        try {
+            var searchBest = searchEngine.findBestMatch("d");
+            System.out.println(searchBest);
+        } catch (BestResultNotFound e) {
+            System.err.println(e);
+        }
     }
 }

@@ -4,12 +4,15 @@
 
 package com.org.skypro.skyshop.product;
 
-public abstract class Product {
+public abstract class Product implements Searchable {
+
     protected String title;
     protected int price;
-   // protected boolean spec = false;
 
     public Product(String name, int price) {
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("Введите название продукта");
+        }
         this.title = name;
         this.price = price;
     }
@@ -30,6 +33,16 @@ public abstract class Product {
 
     public boolean isSpecial() {
         return false;
+    }
+
+    @Override
+    public String searchTherm() {
+        return "Имя товара " + title;
+    }
+
+    @Override
+    public String searchContent() {
+        return "Product";
     }
 
 
