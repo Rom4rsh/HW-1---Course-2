@@ -1,39 +1,32 @@
-package com.org.skypro.skyshop.product;
+package com.org.skypro.skyshop.search;
 
-import java.util.Arrays;
+import com.org.skypro.skyshop.product.BestResultNotFound;
 
-public class SearchEngine {
-    private static final int MAX_RESULTS = 5;
-    private Searchable[] searchableItems;
+import java.util.ArrayList;
+import java.util.List;
 
+public final class SearchEngine {
 
-    public SearchEngine(int size) {
-        this.searchableItems = new Searchable[size];
-        Arrays.fill(searchableItems, null);
+    private final List<Searchable> searchableItems;
+
+    public SearchEngine() {
+        searchableItems = new ArrayList<>();
     }
-
-    private int currentIndex = 0;
 
     public void searchAdd(Searchable item) {
-        searchableItems[currentIndex++] = item;
-        if (currentIndex >= searchableItems.length) {
-            System.out.println("Невозможно добавить элемент для поиска");
-        }
+        searchableItems.add(item);
     }
 
-    // Метод для поиска по строке query и возвращения 5 результатов
-    public Searchable[] search(String query) {
-        Searchable[] results = new Searchable[MAX_RESULTS];
+    // Метод для поиска по строке query
+    public List<Searchable> search(String query) {
+        List<Searchable> results = new ArrayList<>();
         int resultCount = 0;
         for (var item : searchableItems) {
             if (item == null) {
                 continue;
             }
             if (item.searchTherm().contains(query)) {
-                results[resultCount++] = item;
-                if (resultCount >= results.length) {
-                    break;
-                }
+                results.add(resultCount, item);
             }
         }
         return results;
@@ -54,8 +47,9 @@ public class SearchEngine {
                 maxCount = count;
                 bestMatch = item;
             }
-        }if (bestMatch==null){
-            throw new BestResultNotFound("Ничего не найдено по запросу - "+ search);
+        }
+        if (bestMatch == null) {
+            throw new BestResultNotFound("Ничего не найдено по запросу - " + search);
         }
         return bestMatch;
     }

@@ -4,6 +4,8 @@
 
 package com.org.skypro.skyshop.product;
 
+import com.org.skypro.skyshop.search.Searchable;
+
 public abstract class Product implements Searchable {
 
     protected String title;

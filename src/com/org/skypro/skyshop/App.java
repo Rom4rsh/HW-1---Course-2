@@ -4,10 +4,12 @@
 
 package com.org.skypro.skyshop;
 
+import com.org.skypro.skyshop.article.Article;
 import com.org.skypro.skyshop.basket.ProductBasket;
 import com.org.skypro.skyshop.product.*;
+import com.org.skypro.skyshop.search.SearchEngine;
 
-import java.util.Arrays;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) {
@@ -15,7 +17,7 @@ public class App {
         ProductBasket basket = new ProductBasket();
 
         var product1 = new SimpleProduct("Кофта", 1000);
-        var product2 = new SimpleProduct("Кеды", 2);
+        var product2 = new SimpleProduct("Кеды", 2000);
         var product3 = new SimpleProduct("Футболка", 2000);
         var product4 = new SimpleProduct("Рубашка", 2000);
         var prodcut5 = new SimpleProduct("Джинсы", 3000);
@@ -39,6 +41,31 @@ public class App {
 
         // Печать содержимого корзины с несколькими товарами.
         basket.printProducts();
+
+        //Удаление продукта по имени
+        List<Product> delProd = basket.delByName("Футболка");
+        System.out.print("delProd : ");
+        for (Product product : delProd) {
+            System.out.println(product);
+        }
+        if (delProd.isEmpty()) {
+            System.out.println("Список пуст");
+        }
+
+        basket.printProducts();
+
+        //Удаление несуществующего продукта по имени
+        delProd = basket.delByName("ФКК");
+        System.out.print("delProd : ");
+        for (Product product : delProd) {
+            System.out.println(product);
+        }
+        if (delProd.isEmpty()) {
+            System.out.println("Список пуст");
+        }
+
+        basket.printProducts();
+
 
         // Получение стоимости корзины с несколькими товарами.
         int totalPrice = basket.getTotalPrice();
@@ -67,7 +94,7 @@ public class App {
         System.out.println("Наличие товара в корзине: " + itemExists);
 
 
-        SearchEngine searchEngine = new SearchEngine(100);
+        SearchEngine searchEngine = new SearchEngine();
 
         searchEngine.searchAdd(product1);
         searchEngine.searchAdd(product2);
@@ -128,3 +155,4 @@ public class App {
         }
     }
 }
+
