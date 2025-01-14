@@ -4,10 +4,11 @@
 
 package com.org.skypro.skyshop;
 
+import com.org.skypro.skyshop.article.Article;
 import com.org.skypro.skyshop.basket.ProductBasket;
 import com.org.skypro.skyshop.product.*;
+import com.org.skypro.skyshop.search.SearchEngine;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class App {

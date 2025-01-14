@@ -1,4 +1,6 @@
-package com.org.skypro.skyshop.product;
+package com.org.skypro.skyshop.search;
+
+import com.org.skypro.skyshop.product.BestResultNotFound;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +18,8 @@ public final class SearchEngine {
     }
 
     // Метод для поиска по строке query
-    public ArrayList<Object> search(String query) {
-        ArrayList<Object> results = new ArrayList<>();
+    public List<Searchable> search(String query) {
+        List<Searchable> results = new ArrayList<>();
         int resultCount = 0;
         for (var item : searchableItems) {
             if (item == null) {
