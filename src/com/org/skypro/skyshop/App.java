@@ -42,7 +42,7 @@ public class App {
         // Печать содержимого корзины с несколькими товарами.
         basket.printProducts();
 
-        //Удаление продукта по имени
+        // Удаление продукта по имени
         List<Product> delProd = basket.delByName("Футболка");
         System.out.print("delProd : ");
         for (Product product : delProd) {
@@ -52,17 +52,17 @@ public class App {
             System.out.println("Список пуст");
         }
 
-        basket.printProducts();
-
-        //Удаление несуществующего продукта по имени
-        delProd = basket.delByName("ФКК");
-        System.out.print("delProd : ");
-        for (Product product : delProd) {
-            System.out.println(product);
-        }
-        if (delProd.isEmpty()) {
-            System.out.println("Список пуст");
-        }
+//        basket.printProducts();
+//
+//        //  Удаление несуществующего продукта по имени
+//        delProd = basket.delByName("ФКК");
+//        System.out.print("delProd : ");
+//        for (Product product : delProd) {
+//            System.out.println(product);
+//        }
+//        if (delProd.isEmpty()) {
+//            System.out.println("Список пуст");
+//        }
 
         basket.printProducts();
 
@@ -116,18 +116,11 @@ public class App {
 
 
         var searchResults = searchEngine.search("31");
-        for (var result : searchResults) {
-            if (result != null) {
-                System.out.println(result);
-            }
-        }
+        System.out.println(searchResults);
 
         var searchResults2 = searchEngine.search("Мужской день");
-        for (var result : searchResults2) {
-            if (result != null) {
-                System.out.println(result);
-            }
-        }
+        System.out.println(searchResults2);
+
 
         try {
             Product product = new SimpleProduct("", 1000);

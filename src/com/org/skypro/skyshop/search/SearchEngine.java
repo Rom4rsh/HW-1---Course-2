@@ -4,6 +4,8 @@ import com.org.skypro.skyshop.product.BestResultNotFound;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public final class SearchEngine {
 
@@ -18,15 +20,15 @@ public final class SearchEngine {
     }
 
     // Метод для поиска по строке query
-    public List<Searchable> search(String query) {
-        List<Searchable> results = new ArrayList<>();
-        int resultCount = 0;
-        for (var item : searchableItems) {
+    public Map<String,Searchable> search(String query) {
+        Map<String,Searchable> results = new TreeMap<>();
+        //int resultCount = 0;
+        for (Searchable item : searchableItems) {
             if (item == null) {
                 continue;
             }
             if (item.searchTherm().contains(query)) {
-                results.add(resultCount, item);
+                results.put(item.searchTherm(), item);
             }
         }
         return results;
