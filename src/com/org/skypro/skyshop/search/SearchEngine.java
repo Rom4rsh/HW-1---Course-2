@@ -22,7 +22,6 @@ public final class SearchEngine {
     // Метод для поиска по строке query
     public Map<String,Searchable> search(String query) {
         Map<String,Searchable> results = new TreeMap<>();
-        //int resultCount = 0;
         for (Searchable item : searchableItems) {
             if (item == null) {
                 continue;
@@ -44,7 +43,7 @@ public final class SearchEngine {
                 continue;
             }
             String searchTerm = item.searchTherm();
-            int count = (countOcurrreneces(searchTerm, search));
+            int count = (countOcurreneces(searchTerm, search));
             if (count > maxCount) {
                 maxCount = count;
                 bestMatch = item;
@@ -56,7 +55,12 @@ public final class SearchEngine {
         return bestMatch;
     }
 
-    public int countOcurrreneces(String searchTerm, String search) {
+    public int countOcurreneces(String searchTerm, String search) {
+        // Проверка на null
+        if (searchTerm == null || search == null) {
+            throw new IllegalArgumentException("введите значение search или searchTherm");
+        }
+
         int count = 0;
         int index = 0;
         int subString = searchTerm.indexOf(search, index);

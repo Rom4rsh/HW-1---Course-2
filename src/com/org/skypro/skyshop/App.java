@@ -43,7 +43,7 @@ public class App {
         basket.printProducts();
 
         // Удаление продукта по имени
-        List<Product> delProd = basket.delByName("Футболка");
+        List<Product> delProd = basket.deleteByName("Футболка");
         System.out.print("delProd : ");
         for (Product product : delProd) {
             System.out.println(product);
@@ -54,7 +54,7 @@ public class App {
 
 
         //  Удаление несуществующего продукта по имени
-        delProd = basket.delByName("ФКК");
+        delProd = basket.deleteByName("ФКК");
         System.out.print("delProd : ");
         for (Product product : delProd) {
             System.out.println(product);

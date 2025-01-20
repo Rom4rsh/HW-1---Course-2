@@ -21,14 +21,7 @@ public class ProductBasket {
             return;
         }
 
-        List<Product> item;
-
-        if (!products.containsKey(product.getTitle())) {
-            item = new LinkedList<>();
-            products.put(product.getTitle(), item);
-        } else {
-            item = products.get(product.getTitle());
-        }
+        List<Product> item = products.computeIfAbsent(product.getTitle(), k -> new LinkedList<>());
         item.add(product);
     }
 
@@ -74,11 +67,12 @@ public class ProductBasket {
     }
 
 
-    public List<Product> delByName(String title) {
+    public List<Product> deleteByName(String title) {
         List<Product> delProd = new LinkedList<>();
 
-        if (title == null) {
-            System.out.println("Введите название");
+
+        // Проверка на пустое или null название
+        if (title == null || title.trim().isEmpty()) {
             return delProd;
         }
 
@@ -87,21 +81,21 @@ public class ProductBasket {
             Map.Entry<String, List<Product>> mapEntry = entryIterator.next();
             List<Product> productList = mapEntry.getValue();
 
-            // Итерируемся по списку и удаляем продукты с указанным названием
-            Iterator<Product> productIterator = productList.iterator();
-            while (productIterator.hasNext()) {
-                Product product = productIterator.next();
-                if (product.getTitle().equals(title)) {
-                    delProd.add(product);
-                    productIterator.remove(); // Удаляем продукт из списка
+            // Используем removeIf для удаления продуктов с указанным названием
+            boolean removed = productList.removeIf(product -> {
+                boolean toRemove = product.getTitle().equals(title);
+                if (toRemove) {
+                    delProd.add(product); // Добавляем в список удалённых продуктов
                 }
-            }
+                return toRemove;
+            });
 
             // Если список после удаления стал пустым, удаляем запись из Map
             if (productList.isEmpty()) {
                 entryIterator.remove();
             }
         }
+
         return delProd;
     }
 }
