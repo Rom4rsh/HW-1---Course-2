@@ -52,20 +52,18 @@ public class App {
             System.out.println("Список пуст");
         }
 
-//        basket.printProducts();
-//
-//        //  Удаление несуществующего продукта по имени
-//        delProd = basket.delByName("ФКК");
-//        System.out.print("delProd : ");
-//        for (Product product : delProd) {
-//            System.out.println(product);
-//        }
-//        if (delProd.isEmpty()) {
-//            System.out.println("Список пуст");
-//        }
+
+        //  Удаление несуществующего продукта по имени
+        delProd = basket.delByName("ФКК");
+        System.out.print("delProd : ");
+        for (Product product : delProd) {
+            System.out.println(product);
+        }
+        if (delProd.isEmpty()) {
+            System.out.println("Список пуст");
+        }
 
         basket.printProducts();
-
 
         // Получение стоимости корзины с несколькими товарами.
         int totalPrice = basket.getTotalPrice();

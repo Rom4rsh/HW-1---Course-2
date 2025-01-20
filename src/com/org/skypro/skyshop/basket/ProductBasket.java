@@ -73,33 +73,40 @@ public class ProductBasket {
         products.clear();
     }
 
+
     public List<Product> delByName(String title) {
         List<Product> delProd = new LinkedList<>();
-        if (delProd.contains(title)) {
-            delProd.clear();
-            delProd.add((Product) delProd);
+
+        if (title == null) {
+            System.out.println("Введите название");
+            return delProd;
+        }
+
+        Iterator<Map.Entry<String, List<Product>>> entryIterator = products.entrySet().iterator();
+        while (entryIterator.hasNext()) {
+            Map.Entry<String, List<Product>> mapEntry = entryIterator.next();
+            List<Product> productList = mapEntry.getValue();
+
+            // Итерируемся по списку и удаляем продукты с указанным названием
+            Iterator<Product> productIterator = productList.iterator();
+            while (productIterator.hasNext()) {
+                Product product = productIterator.next();
+                if (product.getTitle().equals(title)) {
+                    delProd.add(product);
+                    productIterator.remove(); // Удаляем продукт из списка
+                }
+            }
+
+            // Если список после удаления стал пустым, удаляем запись из Map
+            if (productList.isEmpty()) {
+                entryIterator.remove();
+            }
         }
         return delProd;
     }
 }
 
 
-//products.clear(products.containsKey(title));
-
-//        List<Product> delProd = new LinkedList<>();
-//        Iterator<Product> iterator = products.iterator();
-//        while (iterator.hasNext()) {
-//            Product product = iterator.next();
-//            if (product.getTitle().equals(title)) {
-//                delProd.add(product);
-//                iterator.remove();
-//            }
-//        }
-//        if (delProd.isEmpty()) {
-//            System.out.println("Список пуст");
-//        }
-//
-//        return delProd;
 
 
 
