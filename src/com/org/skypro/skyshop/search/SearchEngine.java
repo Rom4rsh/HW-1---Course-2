@@ -2,17 +2,14 @@ package com.org.skypro.skyshop.search;
 
 import com.org.skypro.skyshop.product.BestResultNotFound;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public final class SearchEngine {
 
-    private final List<Searchable> searchableItems;
+    private final HashSet<Searchable> searchableItems;
 
     public SearchEngine() {
-        searchableItems = new ArrayList<>();
+        searchableItems = new HashSet<>();
     }
 
     public void searchAdd(Searchable item) {
@@ -20,14 +17,14 @@ public final class SearchEngine {
     }
 
     // Метод для поиска по строке query
-    public Map<String,Searchable> search(String query) {
-        Map<String,Searchable> results = new TreeMap<>();
+    public Set<Searchable> search(String query) {
+        Set<Searchable> results = new TreeSet<>(new SearchEngineComparator());
         for (Searchable item : searchableItems) {
             if (item == null) {
                 continue;
             }
             if (item.searchTherm().contains(query)) {
-                results.put(item.searchTherm(), item);
+                results.add(item);
             }
         }
         return results;

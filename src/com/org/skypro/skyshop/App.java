@@ -106,18 +106,29 @@ public class App {
         Article article2 = new Article("8 марта", "Женский день");
         Article article3 = new Article("23 февраля", "Мужской день");
         Article article4 = new Article("4 ноября", "День народного единства");
+        Article article6 = new Article("Анастасия", "женское имя");
+        Article article7 = new Article("Роман", "мужское имя");
+        Article article8 = new Article("Аня", "женское имя");
 
         searchEngine.searchAdd(article1);
         searchEngine.searchAdd(article2);
         searchEngine.searchAdd(article3);
         searchEngine.searchAdd(article4);
+        searchEngine.searchAdd(article6);
+        searchEngine.searchAdd(article7);
+        searchEngine.searchAdd(article8);
 
 
         var searchResults = searchEngine.search("31");
         System.out.println(searchResults);
 
+
         var searchResults2 = searchEngine.search("Мужской день");
         System.out.println(searchResults2);
+
+        var searchResults3 = searchEngine.search("н");
+        System.out.println(searchResults3);
+
 
 
         try {
