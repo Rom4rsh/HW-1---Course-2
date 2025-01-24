@@ -6,31 +6,30 @@ package com.org.skypro.skyshop.basket;
 
 import com.org.skypro.skyshop.product.Product;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class ProductBasket {
 
-    private final Product[] products;
-
-    public final int STORAGE_MAX = 20;
+    private final Map<String, List<Product>> products;
 
     public ProductBasket() {
-        products = new Product[STORAGE_MAX];
+        products = new TreeMap<>();
     }
 
     public void addProduct(Product product) {
-        for (int i = 0; i < products.length; i++) {
-            if (products[i] == null) {
-                products[i] = product;
-                return;
-            }
+        if (product == null) {
+            return;
         }
+
+        List<Product> item = products.computeIfAbsent(product.getTitle(), k -> new LinkedList<>());
+        item.add(product);
     }
+
 
     public int getTotalPrice() {
         int sum = 0;
-        for (var product : products) {
-            if (product != null) {
+        for (List<Product> products : products.values()) {
+            for (Product product : products) {
                 sum += product.getPrice();
             }
         }
@@ -40,38 +39,72 @@ public class ProductBasket {
     public void printProducts() {
         boolean empty = true;
         int specialCount = 0;
-        for (var product : products) {
-            if (product != null) {
-                System.out.println(product);
-                if (product.isSpecial()) {
-                    specialCount++;
+        for (List<Product> products : products.values()) {
+            for (Product product : products) {
+                if (product != null) {
+                    System.out.println(product);
+                    if (product.isSpecial()) {
+                        specialCount++;
+                    }
+                    empty = false;
                 }
-                empty = false;
             }
         }
         if (!empty) {
             System.out.println("Колличество специальных товаров " + specialCount);
         }
-
         if (empty) {
             System.out.println("в корзине пусто");
         }
     }
 
     public boolean findProduct(String title) {
-        for (var product : products) {
-            if (product != null) {
-                if (product.getTitle().equals(title)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return products.containsKey(title);
     }
 
     public void emptyBasket() {
-        Arrays.fill(products, null);
+        products.clear();
+    }
+
+
+    public List<Product> deleteByName(String title) {
+        List<Product> delProd = new LinkedList<>();
+
+
+        // Проверка на пустое или null название
+        if (title == null || title.trim().isEmpty()) {
+            return delProd;
+        }
+
+        Iterator<Map.Entry<String, List<Product>>> entryIterator = products.entrySet().iterator();
+        while (entryIterator.hasNext()) {
+            Map.Entry<String, List<Product>> mapEntry = entryIterator.next();
+            List<Product> productList = mapEntry.getValue();
+
+            // Используем removeIf для удаления продуктов с указанным названием
+            boolean removed = productList.removeIf(product -> {
+                boolean toRemove = product.getTitle().equals(title);
+                if (toRemove) {
+                    delProd.add(product); // Добавляем в список удалённых продуктов
+                }
+                return toRemove;
+            });
+
+            // Если список после удаления стал пустым, удаляем запись из Map
+            if (productList.isEmpty()) {
+                entryIterator.remove();
+            }
+        }
+
+        return delProd;
     }
 }
+
+
+
+
+
+
+
 
 

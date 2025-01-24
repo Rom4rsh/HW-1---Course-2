@@ -4,10 +4,12 @@
 
 package com.org.skypro.skyshop;
 
+import com.org.skypro.skyshop.article.Article;
 import com.org.skypro.skyshop.basket.ProductBasket;
 import com.org.skypro.skyshop.product.*;
+import com.org.skypro.skyshop.search.SearchEngine;
 
-import java.util.Arrays;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) {
@@ -15,7 +17,7 @@ public class App {
         ProductBasket basket = new ProductBasket();
 
         var product1 = new SimpleProduct("Кофта", 1000);
-        var product2 = new SimpleProduct("Кеды", 2);
+        var product2 = new SimpleProduct("Кеды", 2000);
         var product3 = new SimpleProduct("Футболка", 2000);
         var product4 = new SimpleProduct("Рубашка", 2000);
         var prodcut5 = new SimpleProduct("Джинсы", 3000);
@@ -38,6 +40,29 @@ public class App {
         basket.addProduct(new SimpleProduct("Сумка", 4000));
 
         // Печать содержимого корзины с несколькими товарами.
+        basket.printProducts();
+
+        // Удаление продукта по имени
+        List<Product> delProd = basket.deleteByName("Футболка");
+        System.out.print("delProd : ");
+        for (Product product : delProd) {
+            System.out.println(product);
+        }
+        if (delProd.isEmpty()) {
+            System.out.println("Список пуст");
+        }
+
+
+        //  Удаление несуществующего продукта по имени
+        delProd = basket.deleteByName("ФКК");
+        System.out.print("delProd : ");
+        for (Product product : delProd) {
+            System.out.println(product);
+        }
+        if (delProd.isEmpty()) {
+            System.out.println("Список пуст");
+        }
+
         basket.printProducts();
 
         // Получение стоимости корзины с несколькими товарами.
@@ -67,7 +92,7 @@ public class App {
         System.out.println("Наличие товара в корзине: " + itemExists);
 
 
-        SearchEngine searchEngine = new SearchEngine(100);
+        SearchEngine searchEngine = new SearchEngine();
 
         searchEngine.searchAdd(product1);
         searchEngine.searchAdd(product2);
@@ -81,26 +106,28 @@ public class App {
         Article article2 = new Article("8 марта", "Женский день");
         Article article3 = new Article("23 февраля", "Мужской день");
         Article article4 = new Article("4 ноября", "День народного единства");
+        Article article6 = new Article("Анастасия", "женское имя");
+        Article article7 = new Article("Роман", "мужское имя");
+        Article article8 = new Article("Аня", "женское имя");
 
         searchEngine.searchAdd(article1);
         searchEngine.searchAdd(article2);
         searchEngine.searchAdd(article3);
         searchEngine.searchAdd(article4);
+        searchEngine.searchAdd(article6);
+        searchEngine.searchAdd(article7);
+        searchEngine.searchAdd(article8);
 
 
         var searchResults = searchEngine.search("31");
-        for (var result : searchResults) {
-            if (result != null) {
-                System.out.println(result);
-            }
-        }
+        System.out.println(searchResults);
 
         var searchResults2 = searchEngine.search("Мужской день");
-        for (var result : searchResults2) {
-            if (result != null) {
-                System.out.println(result);
-            }
-        }
+        System.out.println(searchResults2);
+
+        var searchResults3 = searchEngine.search("о");
+        System.out.println(searchResults3);
+
 
         try {
             Product product = new SimpleProduct("", 1000);
@@ -128,3 +155,4 @@ public class App {
         }
     }
 }
+
