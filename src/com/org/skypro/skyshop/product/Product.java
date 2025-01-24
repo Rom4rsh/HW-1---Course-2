@@ -6,9 +6,10 @@ package com.org.skypro.skyshop.product;
 
 import com.org.skypro.skyshop.search.Searchable;
 
+import java.util.Comparator;
 import java.util.Objects;
 
-public abstract class Product implements Searchable {
+public abstract class Product implements Searchable, Comparable<Product> {
 
     protected String title;
     protected int price;
@@ -59,6 +60,11 @@ public abstract class Product implements Searchable {
     @Override
     public int hashCode() {
         return Objects.hashCode(title);
+    }
+
+    @Override
+    public int compareTo(Product other) {
+        return this.title.compareTo(other.title);
     }
 }
 

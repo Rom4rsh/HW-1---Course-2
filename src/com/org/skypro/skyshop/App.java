@@ -122,13 +122,11 @@ public class App {
         var searchResults = searchEngine.search("31");
         System.out.println(searchResults);
 
-
         var searchResults2 = searchEngine.search("Мужской день");
         System.out.println(searchResults2);
 
-        var searchResults3 = searchEngine.search("н");
+        var searchResults3 = searchEngine.search("о");
         System.out.println(searchResults3);
-
 
 
         try {
