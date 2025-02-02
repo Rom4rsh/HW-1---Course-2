@@ -27,34 +27,22 @@ public class ProductBasket {
 
 
     public int getTotalPrice() {
-        int sum = 0;
-        for (List<Product> products : products.values()) {
-            for (Product product : products) {
-                sum += product.getPrice();
-            }
-        }
-        return sum;
+        return products.values()
+                .stream()
+                .flatMap(Collection::stream)
+                .mapToInt(Product::getPrice).sum();
     }
 
     public void printProducts() {
-        boolean empty = true;
-        int specialCount = 0;
-        for (List<Product> products : products.values()) {
-            for (Product product : products) {
-                if (product != null) {
-                    System.out.println(product);
-                    if (product.isSpecial()) {
-                        specialCount++;
-                    }
-                    empty = false;
-                }
-            }
-        }
-        if (!empty) {
-            System.out.println("Колличество специальных товаров " + specialCount);
-        }
-        if (empty) {
+
+        if (products.isEmpty()) {
             System.out.println("в корзине пусто");
+        } else {
+            products.values()
+                    .stream()
+                    .flatMap(Collection::stream)
+                    .forEach(System.out::println);
+            System.out.println("Количество специальных товаров = " + getSpecialCount());
         }
     }
 
@@ -97,6 +85,14 @@ public class ProductBasket {
         }
 
         return delProd;
+    }
+
+    public int getSpecialCount() {
+        return (int) products.values()
+                .stream()
+                .flatMap(Collection::stream)
+                .filter(Product::isSpecial)
+                .count();
     }
 }
 

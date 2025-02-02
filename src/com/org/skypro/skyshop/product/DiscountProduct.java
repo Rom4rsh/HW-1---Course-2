@@ -28,8 +28,8 @@ public class DiscountProduct extends Product {
         return true;
     }
 
-    @Override
-    public int compareTo(Product other) {
-        return super.compareTo(other);
-    }
+//    @Override
+//    public int compareTo(Product other) {
+//        return super.compareTo(other);
+//    }
 }

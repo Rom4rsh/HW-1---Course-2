@@ -120,14 +120,16 @@ public class App {
 
 
         var searchResults = searchEngine.search("31");
-        System.out.println(searchResults);
+        System.out.print(searchResults);
+        System.out.println("");
 
         var searchResults2 = searchEngine.search("Мужской день");
-        System.out.println(searchResults2);
+        System.out.print(searchResults2);
+        System.out.println("");
 
         var searchResults3 = searchEngine.search("о");
-        System.out.println(searchResults3);
-
+        System.out.print(searchResults3);
+        System.out.println("");
 
         try {
             Product product = new SimpleProduct("", 1000);

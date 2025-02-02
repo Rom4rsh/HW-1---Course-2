@@ -4,12 +4,13 @@
 
 package com.org.skypro.skyshop.product;
 
+import com.org.skypro.skyshop.search.SearchEngineComparator;
 import com.org.skypro.skyshop.search.Searchable;
 
 import java.util.Comparator;
 import java.util.Objects;
 
-public abstract class Product implements Searchable, Comparable<Product> {
+public abstract class Product implements Searchable {
 
     protected String title;
     protected int price;
@@ -42,7 +43,7 @@ public abstract class Product implements Searchable, Comparable<Product> {
 
     @Override
     public String searchTherm() {
-        return "Имя товара " + title;
+        return title;
     }
 
     @Override
@@ -62,9 +63,9 @@ public abstract class Product implements Searchable, Comparable<Product> {
         return Objects.hashCode(title);
     }
 
-    @Override
-    public int compareTo(Product other) {
-        return this.title.compareTo(other.title);
-    }
+//    @Override
+//    public int compareTo(Product other) {
+//        return this.searchTherm().compareTo(other.searchTherm());
+//    }
 }
 

@@ -3,6 +3,8 @@ package com.org.skypro.skyshop.search;
 import com.org.skypro.skyshop.product.BestResultNotFound;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class SearchEngine {
 
@@ -18,16 +20,20 @@ public final class SearchEngine {
 
     // Метод для поиска по строке query
     public Set<Searchable> search(String query) {
-        Set<Searchable> results = new TreeSet<>(new SearchEngineComparator());
-        for (Searchable item : searchableItems) {
-            if (item == null) {
-                continue;
-            }
-            if (item.searchTherm().contains(query)) {
-                results.add(item);
-            }
-        }
-        return results;
+        return searchableItems.stream()
+                .filter(item -> item != null && item.searchTherm().contains(query))
+                .collect(Collectors.toCollection(() -> new TreeSet<>(new SearchEngineComparator())));
+
+//        Set<Searchable> results = new TreeSet<>(new SearchEngineComparator());
+//        for (Searchable item : searchableItems) {
+//            if (item == null) {
+//                continue;
+//            }
+//            if (item.searchTherm().contains(query)) {
+//                results.add(item);
+//            }
+//        }
+//        return results;
     }
 
     public Searchable findBestMatch(String search) throws BestResultNotFound {

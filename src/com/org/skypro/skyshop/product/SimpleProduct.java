@@ -14,9 +14,10 @@ public class SimpleProduct extends Product {
         return price;
     }
 
-    @Override
-    public int compareTo(Product other) {
-        return super.compareTo(other);
-    }
+//    @Override
+//    public int compareTo(Product other) {
+//        return super.compareTo(other);
+   // }
+
 }
 
