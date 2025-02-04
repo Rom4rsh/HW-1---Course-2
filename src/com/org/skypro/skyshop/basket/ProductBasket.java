@@ -6,72 +6,73 @@ package com.org.skypro.skyshop.basket;
 
 import com.org.skypro.skyshop.product.Product;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class ProductBasket {
 
-    private final Product[] products;
-
-    public final int STORAGE_MAX = 20;
+    private final Map<String, List<Product>> products;
 
     public ProductBasket() {
-        products = new Product[STORAGE_MAX];
+        products = new TreeMap<>();
     }
 
     public void addProduct(Product product) {
-        for (int i = 0; i < products.length; i++) {
-            if (products[i] == null) {
-                products[i] = product;
-                return;
-            }
+        if (product == null) {
+            return;
         }
+
+        List<Product> item = products.computeIfAbsent(product.getTitle(), k -> new LinkedList<>());
+        item.add(product);
     }
 
+
     public int getTotalPrice() {
-        int sum = 0;
-        for (var product : products) {
-            if (product != null) {
-                sum += product.getPrice();
-            }
-        }
-        return sum;
+        return products.values()
+                .stream()
+                .flatMap(Collection::stream)
+                .mapToInt(Product::getPrice).sum();
     }
 
     public void printProducts() {
-        boolean empty = true;
-        int specialCount = 0;
-        for (var product : products) {
-            if (product != null) {
-                System.out.println(product);
-                if (product.isSpecial()) {
-                    specialCount++;
-                }
-                empty = false;
-            }
-        }
-        if (!empty) {
-            System.out.println("Колличество специальных товаров " + specialCount);
-        }
 
-        if (empty) {
+        if (products.isEmpty()) {
             System.out.println("в корзине пусто");
+        } else {
+            products.values()
+                    .stream()
+                    .flatMap(Collection::stream)
+                    .forEach(System.out::println);
+            System.out.println("Количество специальных товаров = " + getSpecialCount());
         }
     }
 
     public boolean findProduct(String title) {
-        for (var product : products) {
-            if (product != null) {
-                if (product.getTitle().equals(title)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return products.containsKey(title);
     }
 
     public void emptyBasket() {
-        Arrays.fill(products, null);
+        products.clear();
+    }
+
+
+    public List<Product> deleteByName(String title) {
+        return Optional.ofNullable(products.remove(title)).orElseGet(ArrayList::new);
+    }
+
+    public int getSpecialCount() {
+        return (int) products.values()
+                .stream()
+                .flatMap(Collection::stream)
+                .filter(Product::isSpecial)
+                .count();
     }
 }
+
+
+
+
+
+
+
 
 

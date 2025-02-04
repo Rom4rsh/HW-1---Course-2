@@ -13,5 +13,11 @@ public class SimpleProduct extends Product {
     public int getPrice() {
         return price;
     }
+
+//    @Override
+//    public int compareTo(Product other) {
+//        return super.compareTo(other);
+   // }
+
 }
 

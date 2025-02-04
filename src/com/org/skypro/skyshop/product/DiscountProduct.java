@@ -27,4 +27,9 @@ public class DiscountProduct extends Product {
     public boolean isSpecial() {
         return true;
     }
+
+//    @Override
+//    public int compareTo(Product other) {
+//        return super.compareTo(other);
+//    }
 }
