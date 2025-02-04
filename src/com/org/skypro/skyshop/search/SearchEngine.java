@@ -23,17 +23,6 @@ public final class SearchEngine {
         return searchableItems.stream()
                 .filter(item -> item != null && item.searchTherm().contains(query))
                 .collect(Collectors.toCollection(() -> new TreeSet<>(new SearchEngineComparator())));
-
-//        Set<Searchable> results = new TreeSet<>(new SearchEngineComparator());
-//        for (Searchable item : searchableItems) {
-//            if (item == null) {
-//                continue;
-//            }
-//            if (item.searchTherm().contains(query)) {
-//                results.add(item);
-//            }
-//        }
-//        return results;
     }
 
     public Searchable findBestMatch(String search) throws BestResultNotFound {

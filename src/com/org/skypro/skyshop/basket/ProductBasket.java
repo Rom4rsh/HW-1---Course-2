@@ -56,35 +56,7 @@ public class ProductBasket {
 
 
     public List<Product> deleteByName(String title) {
-        List<Product> delProd = new LinkedList<>();
-
-
-        // Проверка на пустое или null название
-        if (title == null || title.trim().isEmpty()) {
-            return delProd;
-        }
-
-        Iterator<Map.Entry<String, List<Product>>> entryIterator = products.entrySet().iterator();
-        while (entryIterator.hasNext()) {
-            Map.Entry<String, List<Product>> mapEntry = entryIterator.next();
-            List<Product> productList = mapEntry.getValue();
-
-            // Используем removeIf для удаления продуктов с указанным названием
-            boolean removed = productList.removeIf(product -> {
-                boolean toRemove = product.getTitle().equals(title);
-                if (toRemove) {
-                    delProd.add(product); // Добавляем в список удалённых продуктов
-                }
-                return toRemove;
-            });
-
-            // Если список после удаления стал пустым, удаляем запись из Map
-            if (productList.isEmpty()) {
-                entryIterator.remove();
-            }
-        }
-
-        return delProd;
+        return Optional.ofNullable(products.remove(title)).orElseGet(ArrayList::new);
     }
 
     public int getSpecialCount() {
